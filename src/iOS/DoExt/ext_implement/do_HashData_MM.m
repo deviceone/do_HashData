@@ -42,9 +42,11 @@
 }
 #pragma mark -
 #pragma mark - doIDataSource implements
--(void) GetJsonData:(id<doGetJsonCallBack>) _callback
+-(doJsonValue*) GetJsonData;
 {
-    [_callback doGetJsonCallBack:dict];
+    doJsonValue* jsonvalue = [[doJsonValue alloc]init];
+    [jsonvalue SetNode:dict];
+    return jsonvalue;
 }
 
 #pragma mark -
