@@ -17,17 +17,9 @@
 @implementation do_HashData_MM
 {
     @private
-    doJsonValue* dict;
+    doJsonNode* dict;
 }
-#pragma mark - doIHashData
--(NSArray*) GetAllKey
-{
-    return [dict.allDic allKeys];
-}
--(id) GetData:(NSString*) key
-{
-    return [[dict GetNode] GetOneValue:key];
-}
+
 #pragma mark - 注册属性（--属性定义--）
 /*
  [self RegistProperty:[[doProperty alloc]init:@"属性名" :属性类型 :@"默认值" : BOOL:是否支持代码修改属性]];
@@ -36,9 +28,7 @@
 {
     [super OnInit];
     if(dict==nil){
-        dict = [[doJsonValue alloc]init];
-        doJsonNode* node = [[doJsonNode alloc]init];
-        [dict SetNode:node];
+        dict = [[doJsonNode alloc]init];
     }
     //注册属性
 }
@@ -47,7 +37,7 @@
 -(void)Dispose
 {
     //自定义的全局属性
-    [dict.allDic removeAllObjects];
+    [dict.dictValues removeAllObjects];
     dict = nil;
 }
 #pragma mark -
@@ -65,11 +55,10 @@
  {
      doJsonNode *_dictParas = [parms objectAtIndex:0];
      doJsonNode* datas = [_dictParas GetOneNode:@"data"];
-     doJsonNode* node = [dict GetNode];
      NSMutableDictionary* allkeyvalue = [datas GetAllKeyValues];
      for(NSString* key in allkeyvalue)
      {
-         [node SetOneValue:key :allkeyvalue[key]];
+         [dict SetOneValue:key :allkeyvalue[key]];
      }
      
  }
@@ -79,13 +68,13 @@
      //自己的代码实现
      NSString* key = [_dictParas GetOneText:@"key" : @""];
      doJsonValue* value = [_dictParas GetOneValue:@"value"];
-     [[dict GetNode] SetOneValue:key :value];
+     [dict SetOneValue:key :value];
  }
 
  - (void)getCount:(NSArray *)parms
  {
      doInvokeResult *_invokeResult = [parms objectAtIndex:2];
-     [_invokeResult SetResultInteger:(int)dict.allDic.count];
+     [_invokeResult SetResultInteger:(int)dict.dictValues.count];
  }
 
  - (void)getData:(NSArray *)parms
@@ -96,7 +85,7 @@
      NSMutableArray* result = [[NSMutableArray alloc]initWithCapacity:keys.count];
      for(NSString* key in keys)
      {
-        doJsonValue* _jsonValue = [[dict GetNode]GetOneValue:key];
+        doJsonValue* _jsonValue = [dict GetOneValue:key];
         [result addObject:_jsonValue];
      }
      doInvokeResult *_invokeResult = [parms objectAtIndex:2];
@@ -108,13 +97,13 @@
      doJsonNode *_dictParas = [parms objectAtIndex:0];
      //自己的代码实现
      NSString* key = [_dictParas GetOneText:@"key" : @""];
-     doJsonValue* _jsonValue = [[dict GetNode]GetOneValue:key];
+     doJsonValue* _jsonValue = [dict GetOneValue:key];
      doInvokeResult *_invokeResult = [parms objectAtIndex:2];
      [_invokeResult SetResultValue:_jsonValue];
  }
  - (void)removeAll:(NSArray *)parms
  {
-     [[dict GetNode].dictValues removeAllObjects];
+     [dict.dictValues removeAllObjects];
      //自己的代码实现
  }
  - (void)removeData:(NSArray *)parms
@@ -123,7 +112,7 @@
      NSArray* keys = [_dictParas GetOneTextArray:@"keys"];
      for(NSString* key in keys)
      {
-        [[dict GetNode].dictValues removeObjectForKey:key];
+        [dict.dictValues removeObjectForKey:key];
      }
  }
  - (void)removeOne:(NSArray *)parms
@@ -132,7 +121,7 @@
      //自己的代码实现
      NSString* key = [_dictParas GetOneText:@"key" : @""];
      if(key.length>0){
-         [[dict GetNode].dictValues removeObjectForKey:key];
+         [dict.dictValues removeObjectForKey:key];
      }
  }
  - (void)updateOne:(NSArray *)parms
@@ -141,12 +130,12 @@
      //自己的代码实现
      NSString* key = [_dictParas GetOneText:@"key" : @""];
      doJsonValue* value = [_dictParas GetOneValue:@"value"];
-     [[dict GetNode] SetOneValue:key :value];
+     [dict SetOneValue:key :value];
  }
 - (void)getAll:(NSArray *)parms
 {
     doInvokeResult *_invokeResult = [parms objectAtIndex:2];
-    [_invokeResult SetResultValue:dict];
+    [_invokeResult SetResultNode:dict];
 }
 //异步
 
