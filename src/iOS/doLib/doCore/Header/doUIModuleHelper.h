@@ -20,7 +20,6 @@
 + (void)HandleBasicViewProperChanged:(doUIModule *)_uiModule :(NSMutableDictionary*) _changedValues;
 + (void) OnRedraw:(doUIModule*) _uiModule;
 + (UIColor*) GetColorFromString: (NSString*) _colorStr : (UIColor*) _default;
-+ (NSString*) GetTagContent:(UIView*) _view;
 + (BOOL) IsLandscape;
 
 +(NSString*)GetCloseAnimation:(NSString*)animationIn;

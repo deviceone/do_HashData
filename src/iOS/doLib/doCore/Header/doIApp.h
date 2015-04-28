@@ -24,7 +24,7 @@
 #pragma mark -
 @required
 - (id<doIConfig>) GetConfig:(NSString *) _adapterID;
--(doMultitonModule*) CreateMultitonModule:(NSString*) _typeID;
+-(doMultitonModule*) CreateMultitonModule:(NSString*) _typeID :(NSString*) _id;
 -(doMultitonModule*) GetMultitonModuleByAddress:(NSString*) _key;
 -(BOOL) DeleteMultitonModule:(NSString*) _address;
 -(void) Dispose;

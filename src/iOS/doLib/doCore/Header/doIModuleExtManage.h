@@ -12,4 +12,6 @@
 #pragma mark -
 @required
 -(NSString*) GetIdentifier:(NSString*) resName :(NSString*) pluginKey;
+@optional
+- (NSString *)GetThirdAppKey:(NSString *) fileName :(NSString *) key;
 @end

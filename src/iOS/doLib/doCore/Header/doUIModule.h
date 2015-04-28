@@ -20,13 +20,16 @@
 @property(assign,nonatomic)double r;//右
 @property(assign,nonatomic)double b;//下
 -(id) init:(NSString*) _mar;
+-(void) SetData:(NSString*) _mar;
 @end
 
 @interface doUIModule : doModuleBase
 {
-    @private
+@private
     NSString* uiid;
+    doMargins* margin;
     NSMutableDictionary* initilizedProperties;
+    doMargins* margins;
 }
 #pragma mark -
 @property(strong,nonatomic) doUIModuleCollection* ParentUICollection;//当前所属父控件
@@ -47,7 +50,7 @@
 @property(assign,nonatomic)double RealWidth;
 @property(assign,nonatomic)double RealHeight;
 @property(assign,nonatomic)NSString* Tag;
-@property(assign,nonatomic)doMargins* Margins;
+@property(strong,nonatomic)doMargins* Margins;
 
 #pragma mark -
 - (void) LoadView;

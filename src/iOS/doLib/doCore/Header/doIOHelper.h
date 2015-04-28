@@ -25,4 +25,6 @@
 + (void) WriteAllBytes :(NSString*)_fileFullName :(NSData*) _content;
 +(void) WriteAllText :(NSString*)_fileFullName :(NSString*) _content;
 + (NSString*)URLDecodedString:(NSString*)str;
++(void) DirectoryCopy:(NSString*) _srcDir :(NSString*) _targetDir;
+
 @end

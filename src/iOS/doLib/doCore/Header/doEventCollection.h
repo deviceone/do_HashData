@@ -13,7 +13,7 @@
 
 @interface doEventCollection : NSObject
 {
-    @private
+@private
     NSMutableArray* callBackCollection;
     NSDate* lastResponseTime;
 }
@@ -28,4 +28,5 @@
 - (void) Unsubscribe: (id<doIScriptEngine>) _scriptEngine;
 - (void) ReSubscibeMessage: (doCallBackTask*) _callbackTask;
 - (void) FireEvent: (doInvokeResult*) _jsonResult;
+- (int) GetCallBackCount;
 @end

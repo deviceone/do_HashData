@@ -12,7 +12,7 @@
 @protocol doIScriptEngine;
 @interface doEventCenter : NSObject
 {
-    @private
+@private
     NSMutableDictionary* dictEventCollection;
 }
 #pragma mark -
@@ -22,4 +22,5 @@
 - (void) FireEvent: (NSString*) _messageName : (doInvokeResult*) _invokeResult;
 - (void) SetResponseTime: (NSString*) _messageName : (NSTimeInterval) _responseTime;
 - (void) SetEventData: (NSString*) _messageName : (NSString*) _eventData;
+- (int) GetEventCount:(NSString *)eventName;
 @end

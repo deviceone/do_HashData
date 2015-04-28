@@ -16,5 +16,5 @@
 - (void) WriteError: (NSException *) _err : (NSString *) _desc ,... ;
 - (void) WritePerformance: (NSString *) _opt : (int) _time;
 - (void) WriteDebug: (NSString *) _content;
-
+- (void) WriteInfo: (NSString *) _content : (NSString*) _tag;
 @end

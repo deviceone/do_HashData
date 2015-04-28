@@ -10,7 +10,7 @@
 @class doJsonValue;
 //delegate
 @protocol doGetJsonCallBack
--(void) doGetJsonCallBack:(doJsonValue*) _jsonValue;
+-(void) doGetJsonCallBack:(id) _jsonValue;
 @end
 
 @protocol doIDataSource

@@ -10,6 +10,6 @@
 @class doModuleBase;
 
 @protocol doIDataModule
--(void) BindModule:(doModuleBase*) _bindModule :(NSString*) _bindPath :(NSMutableDictionary*) _bindParas;
+-(void) BindModule:(doModuleBase*) _bindModule :(NSMutableDictionary*) _bindParas;
 -(void) UnBindModule:(doModuleBase*) _bindModule;
 @end

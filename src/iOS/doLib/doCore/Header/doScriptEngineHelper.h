@@ -38,5 +38,5 @@
 +(doMultitonModule*) ParseMultitonModule:(id<doIScriptEngine>) _scriptEngine : (NSString*) _path ;
 +(BOOL) InvokeSyncSelector:(id) _self : (NSString*) _methodName : (doJsonNode *) _dictParas :(id<doIScriptEngine>) _scriptEngine : (doInvokeResult *)_invokeResult;
 +(BOOL) InvokeASyncSelector:(id) _self :(NSString *) _methodName : (doJsonNode *) _dictParas :(id<doIScriptEngine>) _scriptEngine : (NSString *) _callbackFuncName ;
-
++ (id) GetUIModuleByPath:(id<doIScriptEngine>) _scriptEngine : (NSString*) _path : (id) _currentObject;
 @end

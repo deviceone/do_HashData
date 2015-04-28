@@ -14,6 +14,7 @@
 {
     @protected
     NSMutableDictionary* dictProperties;//处理成员属性
+    NSMutableDictionary* mapping;
 }
 #pragma mark -
 //当前所属页面
@@ -25,11 +26,11 @@
 - (void) SetPropertyValue: (NSString*) _key : (NSString*) _val;//设置属性值
 - (NSString*) GetPropertyValue: (NSString*) _key;//获取属性值
 - (doProperty*) GetProperty: (NSString*) _key;//获取属性
-
+-(void) SetProperties: (NSMutableDictionary*) _changedValues;
 #pragma mark -
 //virtual
 - (BOOL) OnPropertiesChanging:(NSMutableDictionary*) _changedValues;
 - (void) OnPropertiesChanged:(NSMutableDictionary*) _changedValues;
 - (void) LoadModel: (doJsonNode*) _moduleNode;//装载配置
-- (void) SetModelData:(NSMutableDictionary*) _bindParas :(doJsonValue*) _jsonValue;
+- (void) SetModelData:(NSMutableDictionary*) _bindParas :(id) _jsonValue;
 @end
