@@ -28,6 +28,8 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	public do_HashData_Model() throws Exception {
 		super();
 		data = new DoJsonValue();
+		DoJsonNode _node = new DoJsonNode();
+		data.setNode(_node);
 	}
 
 	/**
