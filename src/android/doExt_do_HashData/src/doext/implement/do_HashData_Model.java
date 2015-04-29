@@ -23,13 +23,11 @@ import doext.define.do_HashData_MAbstract;
  */
 public class do_HashData_Model extends do_HashData_MAbstract implements do_HashData_IMethod, DoIHashData, DoIDataSource {
 
-	private DoJsonValue data;
+	private DoJsonNode data;
 
 	public do_HashData_Model() throws Exception {
 		super();
-		data = new DoJsonValue();
-		DoJsonNode _node = new DoJsonNode();
-		data.setNode(_node);
+		data = new DoJsonNode();
 	}
 
 	/**
@@ -111,12 +109,11 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	@Override
 	public void addData(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		DoJsonNode _newData = _dictParas.getOneNode("data");
-		DoJsonNode _node = data.getNode();
 		Map<String, DoJsonValue> _allKeyValues = _newData.getAllKeyValues();
 		Set<String> _keySet = _allKeyValues.keySet();
 		for (String _key : _keySet) {
 			DoJsonValue _value = _allKeyValues.get(_key);
-			_node.setOneValue(_key, _value);
+			data.setOneValue(_key, _value);
 		}
 	}
 
@@ -131,7 +128,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	public void addOne(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		String _key = _dictParas.getOneText("key", "");
 		DoJsonValue _value = _dictParas.getOneValue("value");
-		data.getNode().setOneValue(_key, _value);
+		data.setOneValue(_key, _value);
 	}
 
 	/**
@@ -143,7 +140,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	 */
 	@Override
 	public void getCount(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
-		_invokeResult.setResultInteger(data.getArray().size());
+		_invokeResult.setResultInteger(data.getAllKeyValues().size());
 	}
 
 	/**
@@ -158,7 +155,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 		List<String> _keys = _dictParas.getOneTextArray("keys");
 		List<DoJsonValue> _data = new ArrayList<DoJsonValue>();
 		for (String _key : _keys) {
-			DoJsonValue _value = data.getNode().getOneValue(_key);
+			DoJsonValue _value = data.getOneValue(_key);
 			_data.add(_value);
 		}
 		_invokeResult.setResultArray(_data);
@@ -174,7 +171,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	@Override
 	public void getOne(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		String _key = _dictParas.getOneText("key", "");
-		DoJsonValue _value = data.getNode().getOneValue(_key);
+		DoJsonValue _value = data.getOneValue(_key);
 		_invokeResult.setResultValue(_value);
 	}
 
@@ -187,7 +184,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	 */
 	@Override
 	public void removeAll(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
-		data.getNode().getAllKeyValues().clear();
+		data.getAllKeyValues().clear();
 	}
 
 	/**
@@ -201,7 +198,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	public void removeData(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		List<String> _keys = _dictParas.getOneTextArray("keys");
 		for (String _key : _keys) {
-			data.getNode().getAllKeyValues().remove(_key);
+			data.getAllKeyValues().remove(_key);
 		}
 	}
 
@@ -215,26 +212,47 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	@Override
 	public void removeOne(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		String _key = _dictParas.getOneText("key", "");
-		data.getNode().getAllKeyValues().remove(_key);
+		data.getAllKeyValues().remove(_key);
 	}
 
 	@Override
 	public void getAll(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
-		_invokeResult.setResultValue(data);
-	}
-
-	@Override
-	public void getJsonData(DoGetJsonCallBack _callback) throws Exception {
-		_callback.doGetJsonCallBack(data);
+		_invokeResult.setResultNode(data);
 	}
 
 	@Override
 	public List<String> getAllKey() {
-		return data.getNode().getAllKeys();
+		return data.getAllKeys();
 	}
 
 	@Override
 	public Object getData(String _key) {
-		return data.getNode().getOneValue(_key);
+		return data.getOneValue(_key);
+	}
+
+	@Override
+	public DoJsonValue getJsonData() throws Exception {
+		DoJsonValue _value = new DoJsonValue();
+		_value.setNode(data);
+		return _value;
+	}
+
+	@Override
+	public void setData(String _key, Object _data) throws Exception {
+		if(_data instanceof DoJsonNode){
+			data.setOneNode(_key, (DoJsonNode) _data);
+		}
+	}
+
+	@Override
+	public String serialize() throws Exception {
+		return data.exportToText();
+	}
+
+	@Override
+	public Object unSerialize(String _str) throws Exception {
+		DoJsonValue _value = new DoJsonValue();
+		_value.loadDataFromText(_str);
+		return _value;
 	}
 }
