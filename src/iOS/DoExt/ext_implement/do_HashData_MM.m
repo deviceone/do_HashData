@@ -19,7 +19,29 @@
     @private
     doJsonNode* dict;
 }
-
+#pragma mark doIHashData
+-(NSArray*) GetAllKey
+{
+    return dict.dictValues.allKeys;
+}
+-(id) GetData:(NSString*) key
+{
+    return [dict GetOneValue:key];
+}
+-(void) SetData:(NSString*) key :(id) data
+{
+    [dict SetOneValue:key :data ];
+}
+-(NSString*) Serialize
+{
+    return [dict ExportToText];
+}
+-(id) UnSerialize:(NSString*) str
+{
+    doJsonValue* jsonvalue = [[doJsonValue alloc]init];
+    [jsonvalue LoadDataFromText:str];
+    return [jsonvalue GetNode];
+}
 #pragma mark - 注册属性（--属性定义--）
 /*
  [self RegistProperty:[[doProperty alloc]init:@"属性名" :属性类型 :@"默认值" : BOOL:是否支持代码修改属性]];
