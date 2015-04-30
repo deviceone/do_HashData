@@ -172,7 +172,9 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	public void getOne(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		String _key = _dictParas.getOneText("key", "");
 		DoJsonValue _value = data.getOneValue(_key);
-		_invokeResult.setResultValue(_value);
+		DoJsonNode _node = new DoJsonNode();
+		_node.setOneValue(_key, _value);
+		_invokeResult.setResultNode(_node);
 	}
 
 	/**
@@ -185,6 +187,8 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	@Override
 	public void removeAll(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		data.getAllKeyValues().clear();
+		data.getAllKeys().clear();
+		data.getAllValues().clear();
 	}
 
 	/**
@@ -198,7 +202,11 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	public void removeData(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		List<String> _keys = _dictParas.getOneTextArray("keys");
 		for (String _key : _keys) {
+			DoJsonValue _value = data.getOneValue(_key);
 			data.getAllKeyValues().remove(_key);
+			data.getAllKeyValues().remove(_key);
+			data.getAllValues().remove(_value);
+			data.getAllKeys().remove(_key);
 		}
 	}
 
@@ -212,7 +220,10 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 	@Override
 	public void removeOne(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine, DoInvokeResult _invokeResult) throws Exception {
 		String _key = _dictParas.getOneText("key", "");
+		DoJsonValue _value = data.getOneValue(_key);
 		data.getAllKeyValues().remove(_key);
+		data.getAllValues().remove(_value);
+		data.getAllKeys().remove(_key);
 	}
 
 	@Override
@@ -239,7 +250,7 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 
 	@Override
 	public void setData(String _key, Object _data) throws Exception {
-		if(_data instanceof DoJsonNode){
+		if (_data instanceof DoJsonNode) {
 			data.setOneNode(_key, (DoJsonNode) _data);
 		}
 	}
