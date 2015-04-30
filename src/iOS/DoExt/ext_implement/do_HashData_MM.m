@@ -123,11 +123,14 @@
      NSString* key = [_dictParas GetOneText:@"key" : @""];
      doJsonValue* _jsonValue = [dict GetOneValue:key];
      doInvokeResult *_invokeResult = [parms objectAtIndex:2];
-     [_invokeResult SetResultValue:_jsonValue];
+     doJsonNode* _node = [[doJsonNode alloc]init];
+     [_node SetOneValue:key :_jsonValue ];
+     [_invokeResult SetResultNode:_node];
  }
  - (void)removeAll:(NSArray *)parms
  {
      [dict.dictValues removeAllObjects];
+     [dict.listValues removeAllObjects];
      //自己的代码实现
  }
  - (void)removeData:(NSArray *)parms
@@ -136,7 +139,8 @@
      NSArray* keys = [_dictParas GetOneTextArray:@"keys"];
      for(NSString* key in keys)
      {
-        [dict.dictValues removeObjectForKey:key];
+         [dict.listValues removeObject:dict.dictValues[key]];
+         [dict.dictValues removeObjectForKey:key];
      }
  }
  - (void)removeOne:(NSArray *)parms
@@ -145,6 +149,7 @@
      //自己的代码实现
      NSString* key = [_dictParas GetOneText:@"key" : @""];
      if(key.length>0){
+         [dict.listValues removeObject:dict.dictValues[key]];
          [dict.dictValues removeObjectForKey:key];
      }
  }
