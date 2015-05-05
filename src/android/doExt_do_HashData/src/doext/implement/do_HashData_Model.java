@@ -204,7 +204,6 @@ public class do_HashData_Model extends do_HashData_MAbstract implements do_HashD
 		for (String _key : _keys) {
 			DoJsonValue _value = data.getOneValue(_key);
 			data.getAllKeyValues().remove(_key);
-			data.getAllKeyValues().remove(_key);
 			data.getAllValues().remove(_value);
 			data.getAllKeys().remove(_key);
 		}
